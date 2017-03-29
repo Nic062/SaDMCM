@@ -41,10 +41,9 @@ public class Lecture {
 			nbrContraintes = Integer.parseInt(ligne.split("-")[2]);
 			listeObjets = new Objet[nbrGroupe][nbrObjetsParGroupe];
 		} catch (IOException e1) {
-			// TODO Bloc catch généré automatiquement
 			e1.printStackTrace();
 		}
-		System.out.println("Nombre de groupe="+ nbrGroupe+" Nombre d'bjets par groupe="+nbrObjetsParGroupe+" Nombre de Contraintes="+nbrContraintes);
+		System.out.println("Nombre de groupe = "+ nbrGroupe+" Nombre d'objets par groupe = "+nbrObjetsParGroupe+" Nombre de Contraintes = "+nbrContraintes);
 	}
 	
 	public void lireContraintesCapacite(){
@@ -57,21 +56,29 @@ public class Lecture {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("Contraintes de capacité ="+Arrays.toString(contraintesCapacite));
+		System.out.println("Contraintes de capacité = "+Arrays.toString(contraintesCapacite));
 	}
 	
 	public void lireGroupe(int numGroupe){
 		for(int i=0;i<nbrObjetsParGroupe;i++){
 			lireObjet(numGroupe,i);
-		}		
+		}
 	}
 	
+	public BufferedReader getLecteurAvecBuffer() {
+		return lecteurAvecBuffer;
+	}
+
+	public void setLecteurAvecBuffer(BufferedReader lecteurAvecBuffer) {
+		this.lecteurAvecBuffer = lecteurAvecBuffer;
+	}
+
 	private void lireObjet(int numGroupe, int numObjet) {
 		try {
 			String ligne = lecteurAvecBuffer.readLine();
 			float profit = Float.parseFloat(ligne.split("-")[0]);
 			int contraintes[] = new int[nbrContraintes]; // Initialisation du tableau de contraintes pour l'objet 
-			for(int j=1;j<nbrContraintes+1;j++){
+			for(int j=1;j<nbrContraintes;j++){
 				contraintes[j-1]=Integer.parseInt(ligne.split("-")[j]);
 			}
 			Objet obj = new Objet(profit, numGroupe, contraintes);
@@ -79,16 +86,18 @@ public class Lecture {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//System.out.println(Arrays.toString(listeObjets).toString());
-		for(int i=0;i<listeObjets.length;i++)
-			for(int j=0; j<listeObjets[i].length;j++)
-				System.out.println(listeObjets[i][j].getProfit());
-		
 	}
 
 	
 	
+	public Objet[][] getListeObjets() {
+		return listeObjets;
+	}
+
+	public void setListeObjets(Objet[][] listeObjets) {
+		this.listeObjets = listeObjets;
+	}
+
 	public int getNbrGroupe() {
 		return nbrGroupe;
 	}
@@ -120,11 +129,5 @@ public class Lecture {
 	public void setContraintesCapacite(int[] contraintesCapacite) {
 		this.contraintesCapacite = contraintesCapacite;
 	}
-
-	public void  lireParGroupe(int nbrLigne){
-		
-	}
 	
-	
-
 }
