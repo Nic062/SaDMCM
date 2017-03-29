@@ -1,5 +1,7 @@
 package entites;
 
+import java.util.Arrays;
+
 public class Objet {
 	private float profit;
 	private int groupe;
@@ -22,6 +24,11 @@ public class Objet {
 		this.choisit = false;
 	}
 	
+	public String toString() {
+		return "Objet [profit=" + profit + ", groupe=" + groupe + ", contraintes=" + Arrays.toString(contraintes)
+				+ ", choisit=" + choisit + "]";
+	}
+
 	public float getProfit() {
 		return profit;
 	}
