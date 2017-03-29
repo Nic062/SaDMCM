@@ -1,3 +1,4 @@
+package entites;
 
 public class Objet {
 	private float profit;
