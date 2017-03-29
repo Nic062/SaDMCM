@@ -4,85 +4,48 @@
 package entites;
 
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * @author vince
- *
- */
 public class Ecriture {
 
-	private Objet[][] listObjet;
+	private Sac sac;
 	private String filename;
-	private double profit;
 	
-	/**
-	 * @param listObjet
-	 * @param filename
-	 */
-	public Ecriture(Objet[][] listObjet, String filename, double profit) {
+	public Ecriture(Sac sac, String filename, double profit) {
 		super();
-		this.listObjet = listObjet;
+		this.setSac(sac);
 		this.filename = filename;
-		this.profit = profit;
 	}
 
-	/**
-	 * @return the listObjet
-	 */
-	public Objet[][] getListObjet() {
-		return listObjet;
+	public Sac getSac() {
+		return sac;
 	}
 
-	/**
-	 * @param listObjet the listObjet to set
-	 */
-	public void setListObjet(Objet[][] listObjet) {
-		this.listObjet = listObjet;
+	public void setSac(Sac sac) {
+		this.sac = sac;
 	}
 
-	/**
-	 * @return the filename
-	 */
 	public String getFilename() {
 		return filename;
 	}
 
-	/**
-	 * @param filename the filename to set
-	 */
 	public void setFilename(String filename) {
 		this.filename = filename;
-	}
-	
-	/**
-	 * @return the profit
-	 */
-	public double getProfit() {
-		return profit;
-	}
-
-	/**
-	 * @param profit the profit to set
-	 */
-	public void setProfit(double profit) {
-		this.profit = profit;
 	}
 
 	public void ecrire() {
 		try {
 			BufferedWriter buffer = new BufferedWriter(new FileWriter(filename + ".out"));
 			buffer.write(filename + "\n");
-			buffer.write(profit + "\n");
-			for (int i = 0; i < listObjet.length; i++) {
-				for (int j = 0; j < listObjet[i].length; j++) {
+			buffer.write(sac.getProfit() + "\n");
+			for (int i = 0; i < sac.getNbGroupes(); i++) {
+				for (int j = 0; j < sac.getObjParGroupe(); j++) {
 					buffer.write("Objet " + (j + 1) + " du groupe " + (i + 1) + " : ");
-					buffer.write(listObjet[i][j].isChoisit() ? "Choisit -> " : "Pas choisit -> ");
-					buffer.write(listObjet[i][j].getProfit() + " ");
-					for (int k = 0; k < listObjet[i][j].getContraintes().length; k++) {
-						buffer.write(listObjet[i][j].getContraintes()[k] + " ");
+					buffer.write(sac.getObjet(i, j).isChoisit() ? "Choisit -> " : "Pas choisit -> ");
+					buffer.write(sac.getObjet(i, j).getProfit() + " ");
+					for (int k = 0; k < sac.getObjet(i, j).getContraintes().length; k++) {
+						buffer.write(sac.getObjet(i, j).getContraintes()[k] + " ");
 					}
 					buffer.write("\n");
 				}
