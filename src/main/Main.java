@@ -4,7 +4,7 @@ import entites.Ecriture;
 import entites.Objet;
 
 public class Main {
-
+//aa
 	/**
 	 * @param args
 	 */
