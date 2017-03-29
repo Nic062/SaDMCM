@@ -46,5 +46,13 @@ public class Objet {
 		this.contraintes = contraintes;
 	}
 
+	public boolean isChoisit() {
+		return choisit;
+	}
+
+	public void setChoisit(boolean choisit) {
+		this.choisit = choisit;
+	}
+
 
 }
