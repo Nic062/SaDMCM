@@ -4,13 +4,24 @@ public class Objet {
 	private float profit;
 	private int groupe;
 	private int contraintes [];
+	private boolean choisit;
 
-	public Objet(float profit, int groupe, int[] contraintes) {
+	public Objet(float profit, int groupe, int[] contraintes, boolean choisit){
 		this.profit = profit;
 		this.groupe = groupe;
 		this.contraintes = contraintes;
+		this.profit = profit;
+		this.choisit = choisit;
 	}
-
+	
+	public Objet(float profit, int groupe, int[] contraintes){
+		this.profit = profit;
+		this.groupe = groupe;
+		this.contraintes = contraintes;
+		this.profit = profit;
+		this.choisit = false;
+	}
+	
 	public float getProfit() {
 		return profit;
 	}
