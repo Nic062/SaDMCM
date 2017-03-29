@@ -79,7 +79,11 @@ public class Ecriture {
 			for (int i = 0; i < listObjet.length; i++) {
 				for (int j = 0; j < listObjet[i].length; j++) {
 					buffer.write("Objet " + (j + 1) + " du groupe " + (i + 1) + " : ");
-					buffer.write(listObjet[i][j].isChoisit() ? "Choisit" : "Pas choisit");
+					buffer.write(listObjet[i][j].isChoisit() ? "Choisit -> " : "Pas choisit -> ");
+					buffer.write(listObjet[i][j].getProfit() + " ");
+					for (int k = 0; k < listObjet[i][j].getContraintes().length; k++) {
+						buffer.write(listObjet[i][j].getContraintes()[k] + " ");
+					}
 					buffer.write("\n");
 				}
 			}
