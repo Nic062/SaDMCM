@@ -12,7 +12,6 @@ public class Objet {
 		this.profit = profit;
 		this.groupe = groupe;
 		this.contraintes = contraintes;
-		this.profit = profit;
 		this.choisit = choisit;
 	}
 	
@@ -20,7 +19,6 @@ public class Objet {
 		this.profit = profit;
 		this.groupe = groupe;
 		this.contraintes = contraintes;
-		this.profit = profit;
 		this.choisit = false;
 	}
 	

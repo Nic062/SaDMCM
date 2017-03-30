@@ -48,6 +48,10 @@ public class Sac {
 	public int[] getContraintes() {
 		return contraintes;
 	}
+	
+	public void setContraintes(int position, int valeur) {
+		this.contraintes[position] = valeur;
+	}
 
 	public void setContraintes(int[] contraintes) {
 		this.contraintes = contraintes;
