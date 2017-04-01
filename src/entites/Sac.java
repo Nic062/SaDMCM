@@ -10,6 +10,13 @@ public class Sac {
 	private int objParGroupe;
 	private int nbContraintes;
 	
+	/**
+	 * Constructeur de la classe Sac
+	 * Il instancie l'attribut listObjet et contraintes
+	 * @param nbGroupes
+	 * @param objParGroupe
+	 * @param nbContraintes
+	 */
 	public Sac(int nbGroupes,
 			int objParGroupe, int nbContraintes) {
 		super();
@@ -21,42 +28,74 @@ public class Sac {
 		this.setContraintes(new int[nbContraintes]);
 	}
 	
+	/**
+	 * @return le nombre de groupe
+	 */
 	public int getNbGroupes() {
 		return nbGroupes;
 	}
 	
+	/**
+	 * 
+	 * @param nbGroupes le nombre de groupe
+	 */
 	public void setNbGroupes(int nbGroupes) {
 		this.nbGroupes = nbGroupes;
 	}
 	
+	/**
+	 * @return le nombre d'objet par groupe
+	 */
 	public int getObjParGroupe() {
 		return objParGroupe;
 	}
 	
+	/**
+	 * @param objParGroupe le nombre d'objet par groupe
+	 */
 	public void setObjParGroupe(int objParGroupe) {
 		this.objParGroupe = objParGroupe;
 	}
 	
+	/**
+	 * @return le nombre de contrainte
+	 */
 	public int getNbContraintes() {
 		return nbContraintes;
 	}
 	
+	/**
+	 * @param nbContraintes le nombre de contrainte
+	 */
 	public void setNbContraintes(int nbContraintes) {
 		this.nbContraintes = nbContraintes;
 	}
 	
+	/**
+	 * @return un tableau de contrainte
+	 */
 	public int[] getContraintes() {
 		return contraintes;
 	}
 	
+	/**
+	 * @param position la position à partir de 0
+	 * @param valeur la valeur de la contrainte
+	 */
 	public void setContraintes(int position, int valeur) {
 		this.contraintes[position] = valeur;
 	}
 
+	/**
+	 * @param contraintes un tableau de contrainte
+	 */
 	public void setContraintes(int[] contraintes) {
 		this.contraintes = contraintes;
 	}
 
+	/**
+	 * @return la valeur du profit actuel suivant les objets choisis
+	 */
 	public double getProfit() {
 		double profit = 0;
 		
@@ -72,18 +111,36 @@ public class Sac {
 		return profit;
 	}
 
+	/**
+	 * @param groupe le numero du groupe, 0 <= groupe < nbGroupe
+	 * @param position la position dans le groupe, 0 <= groupe < objParGroupe
+	 * @param obj l'objet à inserer
+	 */
 	public void addObjet(int groupe, int position, Objet obj) {
 		this.listObjet[groupe][position] = obj;
 	}
 	
+	/**
+	 * @param groupe le numero du groupe
+	 * @return un tableau d'objet appartenant au groupe
+	 */
 	public Objet[] getGroupe(int groupe) {
 		return this.listObjet[groupe];
 	}
 	
+	/**
+	 * @param groupe le numero du groupe à partir de 0
+	 * @param position la position à partir de 0
+	 * @return un objet du groupe
+	 */
 	public Objet getObjet(int groupe, int position) {
 		return this.listObjet[groupe][position];
 	}
 	
+	/**
+	 * Cette fonction addition la plus grosse valeur de chaque groupe pour en faire le profit max
+	 * @return le profit max possible du sac
+	 */
 	public double getProfitMax() {
 		double max = 0;
 		
