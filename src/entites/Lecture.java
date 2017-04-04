@@ -77,8 +77,8 @@ public class Lecture {
 			float profit = Float.parseFloat(ligne.split("-")[0]);
 			int contraintes[] = new int[this.sac.getNbContraintes()]; // Initialisation du tableau de contraintes pour l'objet 
 			
-			for(int j=1;j<this.sac.getNbContraintes();j++){
-				contraintes[j-1]=Integer.parseInt(ligne.split("-")[j]);
+			for(int j=1;j<=this.sac.getNbContraintes();j++){
+				contraintes[j-1]=Integer.parseInt(ligne.split("-")[j].trim());
 			}
 			
 			Objet obj = new Objet(profit, numGroupe, contraintes);

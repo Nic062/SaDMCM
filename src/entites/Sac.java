@@ -3,6 +3,8 @@
  */
 package entites;
 
+import java.util.Arrays;
+
 public class Sac {
 	private Objet[][] listObjet;
 	private int[] contraintes;
@@ -156,6 +158,14 @@ public class Sac {
 		}
 		
 		return max;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Sac [listObjet=" + Arrays.toString(listObjet) + ", contraintes=" + Arrays.toString(contraintes)
+				+ ", nbGroupes=" + nbGroupes + ", objParGroupe=" + objParGroupe + ", nbContraintes=" + nbContraintes
+				+ "]";
 	}
 	
 	/*
