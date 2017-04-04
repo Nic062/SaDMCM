@@ -160,8 +160,6 @@ public class Sac {
 		return max;
 	}
 
-
-	@Override
 	public String toString() {
 		return "Sac [listObjet=" + Arrays.toString(listObjet) + ", contraintes=" + Arrays.toString(contraintes)
 				+ ", nbGroupes=" + nbGroupes + ", objParGroupe=" + objParGroupe + ", nbContraintes=" + nbContraintes
