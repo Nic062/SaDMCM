@@ -173,6 +173,14 @@ public class Sac {
 		this.getObjet(groupe, position).setChoisit(true);
 	}
 	
+	public void setChoisitReset() {
+		for(int i = 0; i < this.getNbGroupes();i++){
+			for (int j = 0; j < this.objParGroupe; j++) {
+				this.getObjet(i, j).setChoisit(false);
+			}
+		}
+	}
+	
 	public boolean verifierContrainte(int numContrainte) {
 		int sommeContrainte = 0;
 		for (int i = 0; i < this.nbGroupes; i++) {
