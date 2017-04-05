@@ -20,5 +20,7 @@ public class Main {
 		long fin = System.currentTimeMillis();
 		System.out.println("Temps d'éxecution : " + (fin - debut) + " ms");
 	}
+	
+	/* TODO: Mettre en place algo 1 */
 
 }

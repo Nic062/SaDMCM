@@ -166,6 +166,13 @@ public class Sac {
 				+ "]";
 	}
 	
+	public void setChoisit(int groupe, int position) {
+		for (int i = 0; i < this.objParGroupe; i++) {
+			this.getObjet(groupe, i).setChoisit(false);
+		}
+		this.getObjet(groupe, position).setChoisit(true);
+	}
+	
 	/*
 	 * TODO: Verifier contraintes en utilisant le boolean "choisit"
 	 * Verifier qu'il y a un obj choisit par groupe ( fonction globale appelant d'autre fonctions ? )
