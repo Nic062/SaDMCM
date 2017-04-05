@@ -173,6 +173,23 @@ public class Sac {
 		this.getObjet(groupe, position).setChoisit(true);
 	}
 	
+	public boolean verifierContrainte(int numContrainte) {
+		int sommeContrainte = 0;
+		for (int i = 0; i < this.nbGroupes; i++) {
+			for (int j = 0; j < this.objParGroupe; j++) {
+				if (this.getObjet(i, j).isChoisit()) {
+					sommeContrainte += this.getObjet(i, j).getContraintes()[numContrainte];
+				}
+			}
+		}
+		
+		if (sommeContrainte > this.getContraintes()[numContrainte]) {
+			return false;
+		}
+		
+		return true;
+	}
+	
 	/*
 	 * TODO: Verifier contraintes en utilisant le boolean "choisit"
 	 * Verifier qu'il y a un obj choisit par groupe ( fonction globale appelant d'autre fonctions ? )
