@@ -28,20 +28,6 @@ public class Main {
 	}
 
 	public static void algorithme(Sac sac) {
-	
-		/*for (int i = 0; i < sac.getObjParGroupe(); i++) {
-			for (int j = 0; j < sac.getObjParGroupe(); j++) {
-				for (int k = 0; k < sac.getObjParGroupe(); k++) {
-
-					Combinaison tmp = new Combinaison();
-					tmp.getListeObjet().add(sac.getObjet(0, i));
-					tmp.getListeObjet().add(sac.getObjet(1, j));
-					tmp.getListeObjet().add(sac.getObjet(2, k));
-
-					ListeComb.add(tmp);
-				}
-			}
-		}*/
 		
 		combin2(0, sac.getListObjet(), null);
 
@@ -54,6 +40,7 @@ public class Main {
 				}
 			}
 		}
+		ListeComb = null;
 
 		Combinaison meilleur = listeValide.get(0);
 		for (Combinaison combinaison : ListeComb) {
