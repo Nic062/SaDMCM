@@ -5,20 +5,20 @@ import java.util.Arrays;
 public class Objet {
 	private float profit;
 	private int groupe;
-	private int contraintes [];
+	private int coef [];
 	private boolean choisit;
 
 	/**
 	 * Constructeur de la classe Objet
 	 * @param profit
 	 * @param groupe
-	 * @param contraintes
+	 * @param coef
 	 * @param choisit
 	 */
-	public Objet(float profit, int groupe, int[] contraintes, boolean choisit){
+	public Objet(float profit, int groupe, int[] coef, boolean choisit){
 		this.profit = profit;
 		this.groupe = groupe;
-		this.contraintes = contraintes;
+		this.coef = coef;
 		this.choisit = choisit;
 	}
 	
@@ -26,12 +26,12 @@ public class Objet {
 	 * Constructeur de la classe Objet avec l'attribut choisit à false
 	 * @param profit
 	 * @param groupe
-	 * @param contraintes
+	 * @param coef
 	 */
-	public Objet(float profit, int groupe, int[] contraintes){
+	public Objet(float profit, int groupe, int[] coef){
 		this.profit = profit;
 		this.groupe = groupe;
-		this.contraintes = contraintes;
+		this.coef = coef;
 		this.choisit = false;
 	}
 	
@@ -39,7 +39,7 @@ public class Objet {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return "Objet [profit=" + profit + ", groupe=" + groupe + ", contraintes=" + Arrays.toString(contraintes)
+		return "Objet [profit=" + profit + ", groupe=" + groupe + ", coef=" + Arrays.toString(coef)
 				+ ", choisit=" + choisit + "]";
 	}
 
@@ -72,17 +72,17 @@ public class Objet {
 	}
 
 	/**
-	 * @return le tableau de contrainte de l'objet
+	 * @return le tableau de coef de l'objet
 	 */
-	public int[] getContraintes() {
-		return contraintes;
+	public int[] getCoef() {
+		return coef;
 	}
 
 	/**
-	 * @param contraintes
+	 * @param coef
 	 */
-	public void setContraintes(int[] contraintes) {
-		this.contraintes = contraintes;
+	public void setCoef(int[] coef) {
+		this.coef = coef;
 	}
 
 	/**

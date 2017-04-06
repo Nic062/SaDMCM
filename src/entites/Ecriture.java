@@ -44,8 +44,8 @@ public class Ecriture {
 					buffer.write("Objet " + (j + 1) + " du groupe " + (i + 1) + " : ");
 					buffer.write(sac.getObjet(i, j).isChoisit() ? "Choisit -> " : "Pas choisit -> ");
 					buffer.write(sac.getObjet(i, j).getProfit() + " ");
-					for (int k = 0; k < sac.getObjet(i, j).getContraintes().length; k++) {
-						buffer.write(sac.getObjet(i, j).getContraintes()[k] + " ");
+					for (int k = 0; k < sac.getObjet(i, j).getCoef().length; k++) {
+						buffer.write(sac.getObjet(i, j).getCoef()[k] + " ");
 					}
 					buffer.write("\n");
 				}
