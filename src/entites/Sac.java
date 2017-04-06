@@ -11,7 +11,7 @@ public class Sac {
 	private int nbGroupes;
 	private int objParGroupe;
 	private int nbContraintes;
-	
+
 	/**
 	 * Constructeur de la classe Sac
 	 * Il instancie l'attribut listObjet et contraintes
@@ -25,18 +25,18 @@ public class Sac {
 		this.nbGroupes = nbGroupes;
 		this.objParGroupe = objParGroupe;
 		this.nbContraintes = nbContraintes;
-		
+
 		this.listObjet = new Objet[nbGroupes][objParGroupe];
 		this.setContraintes(new int[nbContraintes]);
 	}
-	
+
 	/**
 	 * @return le nombre de groupe
 	 */
 	public int getNbGroupes() {
 		return nbGroupes;
 	}
-	
+
 	/**
 	 * 
 	 * @param nbGroupes le nombre de groupe
@@ -44,42 +44,42 @@ public class Sac {
 	public void setNbGroupes(int nbGroupes) {
 		this.nbGroupes = nbGroupes;
 	}
-	
+
 	/**
 	 * @return le nombre d'objet par groupe
 	 */
 	public int getObjParGroupe() {
 		return objParGroupe;
 	}
-	
+
 	/**
 	 * @param objParGroupe le nombre d'objet par groupe
 	 */
 	public void setObjParGroupe(int objParGroupe) {
 		this.objParGroupe = objParGroupe;
 	}
-	
+
 	/**
 	 * @return le nombre de contrainte
 	 */
 	public int getNbContraintes() {
 		return nbContraintes;
 	}
-	
+
 	/**
 	 * @param nbContraintes le nombre de contrainte
 	 */
 	public void setNbContraintes(int nbContraintes) {
 		this.nbContraintes = nbContraintes;
 	}
-	
+
 	/**
 	 * @return un tableau de contrainte
 	 */
 	public int[] getContraintes() {
 		return contraintes;
 	}
-	
+
 	/**
 	 * @param position la position à partir de 0
 	 * @param valeur la valeur de la contrainte
@@ -96,24 +96,6 @@ public class Sac {
 	}
 
 	/**
-	 * @return la valeur du profit actuel suivant les objets choisis
-	 */
-	public double getProfit() {
-		double profit = 0;
-		
-		for ( int i = 0; i < this.nbGroupes; i++) {
-			boolean choisit = false;
-			for (int j = 0; j < this.objParGroupe; j++) {
-				if (!choisit && this.listObjet[i][j].isChoisit()) {
-					profit += this.listObjet[i][j].getProfit();
-				}
-			}
-		}
-		
-		return profit;
-	}
-
-	/**
 	 * @param groupe le numero du groupe, 0 <= groupe < nbGroupe
 	 * @param position la position dans le groupe, 0 <= groupe < objParGroupe
 	 * @param obj l'objet à inserer
@@ -121,7 +103,7 @@ public class Sac {
 	public void addObjet(int groupe, int position, Objet obj) {
 		this.listObjet[groupe][position] = obj;
 	}
-	
+
 	/**
 	 * @param groupe le numero du groupe
 	 * @return un tableau d'objet appartenant au groupe
@@ -129,7 +111,7 @@ public class Sac {
 	public Objet[] getGroupe(int groupe) {
 		return this.listObjet[groupe];
 	}
-	
+
 	/**
 	 * @param groupe le numero du groupe à partir de 0
 	 * @param position la position à partir de 0
@@ -138,14 +120,14 @@ public class Sac {
 	public Objet getObjet(int groupe, int position) {
 		return this.listObjet[groupe][position];
 	}
-	
+
 	/**
 	 * Cette fonction addition la plus grosse valeur de chaque groupe pour en faire le profit max
 	 * @return le profit max possible du sac
 	 */
 	public double getProfitMax() {
 		double max = 0;
-		
+
 		for ( int i = 0; i < this.nbGroupes; i++) {
 			double profitMax = 0;
 			for ( int j = 0; j < this.objParGroupe; j++) {
@@ -153,10 +135,10 @@ public class Sac {
 					profitMax = this.getObjet(i, j).getProfit();
 				}
 			}
-			
+
 			max += profitMax;
 		}
-		
+
 		return max;
 	}
 
@@ -165,41 +147,17 @@ public class Sac {
 				+ ", nbGroupes=" + nbGroupes + ", objParGroupe=" + objParGroupe + ", nbContraintes=" + nbContraintes
 				+ "]";
 	}
-	
-	public void setChoisit(int groupe, int position) {
-		for (int i = 0; i < this.objParGroupe; i++) {
-			this.getObjet(groupe, i).setChoisit(false);
-		}
-		this.getObjet(groupe, position).setChoisit(true);
-	}
-	
-	public void setChoisitReset() {
-		for(int i = 0; i < this.getNbGroupes();i++){
-			for (int j = 0; j < this.objParGroupe; j++) {
-				this.getObjet(i, j).setChoisit(false);
-			}
-		}
-	}
-	
-	public boolean verifierContrainte(int numContrainte) {
+
+	public boolean verifierContrainte(int numContrainte, Combinaison combinaison) {
 		int sommeContrainte = 0;
-		for (int i = 0; i < this.nbGroupes; i++) {
-			for (int j = 0; j < this.objParGroupe; j++) {
-				if (this.getObjet(i, j).isChoisit()) {
-					sommeContrainte += this.getObjet(i, j).getCoef()[numContrainte];
-				}
-			}
+		for (int i = 0; i < combinaison.getListeObjet().size(); i++) {
+			sommeContrainte += combinaison.getListeObjet().get(i).getCoef()[numContrainte];
 		}
-		
+
 		if (sommeContrainte > this.getContraintes()[numContrainte]) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	/*
-	 * TODO: Verifier contraintes en utilisant le boolean "choisit"
-	 * Verifier qu'il y a un obj choisit par groupe ( fonction globale appelant d'autre fonctions ? )
-	 */
 }
