@@ -6,24 +6,9 @@ public class Objet {
 	private float profit;
 	private int groupe;
 	private int coef [];
-	private boolean choisit;
 
 	/**
 	 * Constructeur de la classe Objet
-	 * @param profit
-	 * @param groupe
-	 * @param coef
-	 * @param choisit
-	 */
-	public Objet(float profit, int groupe, int[] coef, boolean choisit){
-		this.profit = profit;
-		this.groupe = groupe;
-		this.coef = coef;
-		this.choisit = choisit;
-	}
-	
-	/**
-	 * Constructeur de la classe Objet avec l'attribut choisit à false
 	 * @param profit
 	 * @param groupe
 	 * @param coef
@@ -32,7 +17,6 @@ public class Objet {
 		this.profit = profit;
 		this.groupe = groupe;
 		this.coef = coef;
-		this.choisit = false;
 	}
 	
 	/* (non-Javadoc)
@@ -40,7 +24,7 @@ public class Objet {
 	 */
 	public String toString() {
 		return "Objet [profit=" + profit + ", groupe=" + groupe + ", coef=" + Arrays.toString(coef)
-				+ ", choisit=" + choisit + "]";
+				+ "]";
 	}
 
 	/**
@@ -83,19 +67,5 @@ public class Objet {
 	 */
 	public void setCoef(int[] coef) {
 		this.coef = coef;
-	}
-
-	/**
-	 * @return true si l'objet est choisit, sinon false
-	 */
-	public boolean isChoisit() {
-		return choisit;
-	}
-
-	/**
-	 * @param choisit
-	 */
-	public void setChoisit(boolean choisit) {
-		this.choisit = choisit;
 	}
 }
