@@ -2,18 +2,21 @@ package main;
 
 import java.util.ArrayList;
 
+import entites.Combinaison;
 import entites.Lecture;
 import entites.Objet;
 import entites.Sac;
 
 public class Main {
-	
+
+	static int counter = 0;
+	static ArrayList<Combinaison> ListeComb = new ArrayList<Combinaison>();
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
-		Lecture lecture = new Lecture("instances/I0.txt");
+		Lecture lecture = new Lecture("instances/I2.txt");
 		lecture.lireEntete();
 		lecture.lireContraintesCapacite();
 		for(int i=0; i<lecture.getSac().getNbGroupes();i++)
@@ -25,63 +28,77 @@ public class Main {
 	}
 
 	public static void algorithme(Sac sac) {
-		for (int i = 0; i < sac.getNbGroupes(); i++) {
-			sac.setChoisit(i, 0);
-		}
-		
-		ArrayList<Sac> listeSac = new ArrayList<Sac>();
-		
-		int nb = 0;		
-		for (int i = 0; i < sac.getObjParGroupe(); i++) {
-			sac.setChoisit(0, i);
+	
+		/*for (int i = 0; i < sac.getObjParGroupe(); i++) {
 			for (int j = 0; j < sac.getObjParGroupe(); j++) {
-				sac.setChoisit(1, j);
 				for (int k = 0; k < sac.getObjParGroupe(); k++) {
-					sac.setChoisit(2, k);
-					Sac tmp = new Sac(sac.getNbGroupes(), sac.getObjParGroupe(), sac.getNbContraintes());
-					tmp.setContraintes(sac.getContraintes());
-					
-					for (int groupe = 0; groupe < sac.getNbGroupes(); groupe++) {
-						for (int obj = 0; obj < sac.getObjParGroupe(); obj++) {
-							tmp.addObjet(sac.getObjet(groupe, obj).getGroupe(),
-									obj,
-									new Objet(sac.getObjet(groupe, obj).getProfit(), groupe, sac.getObjet(groupe, obj).getCoef(), sac.getObjet(groupe, obj).isChoisit()));
-						}
-					}
-					
-					listeSac.add(tmp);
-					nb++;
+
+					Combinaison tmp = new Combinaison();
+					tmp.getListeObjet().add(sac.getObjet(0, i));
+					tmp.getListeObjet().add(sac.getObjet(1, j));
+					tmp.getListeObjet().add(sac.getObjet(2, k));
+
+					ListeComb.add(tmp);
 				}
 			}
-		}
+		}*/
 		
-		ArrayList<Sac> listeValide = new ArrayList<Sac>();
-		
+		combin2(0, sac.getListObjet(), null);
+
+		ArrayList<Combinaison> listeValide = new ArrayList<Combinaison>();
+
 		for (int i = 0; i < sac.getNbContraintes(); i++) {
-			for (Sac proposition : listeSac) {
-				if (proposition.verifierContrainte(i)) {
-					listeValide.add(proposition);
+			for (Combinaison combinaison : ListeComb) {
+				if (sac.verifierContrainte(i, combinaison)) {
+					listeValide.add(combinaison);
 				}
 			}
 		}
-		
-		Sac meilleur = listeValide.get(0);
-		for (Sac proposition : listeSac) {
-			if (proposition.getProfit() > meilleur.getProfit()) {
-				meilleur = proposition;
+
+		Combinaison meilleur = listeValide.get(0);
+		for (Combinaison combinaison : ListeComb) {
+			if (combinaison.getProfit() > meilleur.getProfit()) {
+				meilleur = combinaison;
 			}
 		}
-		
+
 		print(meilleur);
 		System.out.println(meilleur.getProfit());
 	}
-	
-	public static void print(Sac sac) {
-		for (int groupe = 0; groupe < sac.getNbGroupes(); groupe++) {
-			for (int obj = 0; obj < sac.getObjParGroupe(); obj++) {
-				System.out.println(sac.getObjet(groupe, obj));
-			}
+
+	public static void print(Combinaison combinaison) {
+		for (int obj = 0; obj < combinaison.getListeObjet().size(); obj++) {
+			System.out.println(combinaison.getListeObjet().get(obj));
 		}
 	}
+	
+	public static void combin2(int depth, Objet[][]matrix, Objet[] output)
+    {
+        Objet[] row = matrix[depth];
+
+        if(depth == 0) {
+            counter = 0;
+            output = new Objet[matrix.length];
+            System.out.println("matrix length: " + matrix.length);
+        }
+
+        for(int i=0; i<row.length; i++) {
+            output[depth] = row[i];
+
+            if(depth == (matrix.length-1)) {
+                
+            	Combinaison comb = new Combinaison();
+            	for (Objet objet : output) {
+					comb.getListeObjet().add(objet);
+				}
+            	ListeComb.add(comb);
+            	
+                counter++;
+            } else {
+                //recursively generate the combination
+                combin2(depth+1, matrix, output);
+            }
+        }
+    }
 
 }
