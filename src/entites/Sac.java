@@ -186,7 +186,7 @@ public class Sac {
 		for (int i = 0; i < this.nbGroupes; i++) {
 			for (int j = 0; j < this.objParGroupe; j++) {
 				if (this.getObjet(i, j).isChoisit()) {
-					sommeContrainte += this.getObjet(i, j).getContraintes()[numContrainte];
+					sommeContrainte += this.getObjet(i, j).getCoef()[numContrainte];
 				}
 			}
 		}
