@@ -3,6 +3,7 @@ package main;
 import java.util.ArrayList;
 
 import entites.Combinaison;
+import entites.Ecriture;
 import entites.Lecture;
 import entites.Objet;
 import entites.Sac;
@@ -16,7 +17,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
-		Lecture lecture = new Lecture("instances/I2.txt");
+		Lecture lecture = new Lecture("instances/I0.txt");
 		lecture.lireEntete();
 		lecture.lireContraintesCapacite();
 		for(int i=0; i<lecture.getSac().getNbGroupes();i++)
@@ -40,10 +41,9 @@ public class Main {
 				}
 			}
 		}
-		ListeComb = null;
 
 		Combinaison meilleur = listeValide.get(0);
-		for (Combinaison combinaison : ListeComb) {
+		for (Combinaison combinaison : listeValide) {
 			if (combinaison.getProfit() > meilleur.getProfit()) {
 				meilleur = combinaison;
 			}
@@ -51,6 +51,8 @@ public class Main {
 
 		print(meilleur);
 		System.out.println(meilleur.getProfit());
+		Ecriture out = new Ecriture(meilleur, "test", meilleur.getProfit());
+		out.ecrire();
 	}
 
 	public static void print(Combinaison combinaison) {
