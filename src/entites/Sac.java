@@ -112,6 +112,10 @@ public class Sac {
 		return this.listObjet[groupe];
 	}
 
+	public Objet[][] getListObjet() {
+		return listObjet;
+	}
+
 	/**
 	 * @param groupe le numero du groupe à partir de 0
 	 * @param position la position à partir de 0
