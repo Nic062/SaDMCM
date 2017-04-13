@@ -11,46 +11,32 @@ public class Main {
 
 	static int counter = 0;
 	static ArrayList<Combinaison> ListeComb = new ArrayList<Combinaison>();
+	static Sac sac;
+	static Combinaison lastBestCombinaison = null;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
-		Lecture lecture = new Lecture("instances/I2.txt");
+		Lecture lecture = new Lecture("instances/I3.txt");
 		lecture.lireEntete();
 		lecture.lireContraintesCapacite();
 		for(int i=0; i<lecture.getSac().getNbGroupes();i++)
 			lecture.lireGroupe(i);
-		Sac sac = lecture.getSac();
-		algorithme(sac);
+		sac = lecture.getSac();
+		algorithme();
 		long fin = System.currentTimeMillis();
 		System.out.println("Temps d'éxecution : " + (fin - debut) + " ms");
 	}
 
-	public static void algorithme(Sac sac) {
+	public static void algorithme() {
 		
 		combin2(0, sac.getListObjet(), null);
 
 		ArrayList<Combinaison> listeValide = new ArrayList<Combinaison>();
-
-		for (int i = 0; i < sac.getNbContraintes(); i++) {
-			for (Combinaison combinaison : ListeComb) {
-				if (sac.verifierContrainte(i, combinaison)) {
-					listeValide.add(combinaison);
-				}
-			}
-		}
-		ListeComb = null;
-
-		Combinaison meilleur = listeValide.get(0);
-		for (Combinaison combinaison : ListeComb) {
-			if (combinaison.getProfit() > meilleur.getProfit()) {
-				meilleur = combinaison;
-			}
-		}
-
-		print(meilleur);
-		System.out.println(meilleur.getProfit());
+		print(lastBestCombinaison);
+		System.out.println("Profit = "+lastBestCombinaison.getProfit());
+		
 	}
 
 	public static void print(Combinaison combinaison) {
@@ -78,11 +64,22 @@ public class Main {
             	for (Objet objet : output) {
 					comb.getListeObjet().add(objet);
 				}
-            	ListeComb.add(comb);
+            	
+            	boolean ajout = true;
+            	for(int j=0;j<sac.getNbContraintes();j++){
+            		if(!sac.verifierContrainte(j, comb)){
+            			ajout = false;
+            			break;
+            		}
+            	}
+            	if(ajout){
+            		if(lastBestCombinaison==null || lastBestCombinaison.getProfit()<comb.getProfit()){
+            			lastBestCombinaison = comb;
+            		}
+            	}
             	
                 counter++;
             } else {
-                //recursively generate the combination
                 combin2(depth+1, matrix, output);
             }
         }
