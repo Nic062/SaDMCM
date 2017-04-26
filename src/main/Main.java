@@ -1,7 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-
 import entites.Combinaison;
 import entites.Lecture;
 import entites.Objet;
@@ -10,7 +8,6 @@ import entites.Sac;
 public class Main {
 
 	static int counter = 0;
-	static ArrayList<Combinaison> ListeComb = new ArrayList<Combinaison>();
 	static Sac sac;
 	static Combinaison lastBestCombinaison = null;
 	/**
@@ -18,7 +15,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
-		Lecture lecture = new Lecture("instances/I3.txt");
+		Lecture lecture = new Lecture("instances/I2.txt");
 		lecture.lireEntete();
 		lecture.lireContraintesCapacite();
 		for(int i=0; i<lecture.getSac().getNbGroupes();i++)
@@ -30,10 +27,7 @@ public class Main {
 	}
 
 	public static void algorithme() {
-		
 		combin2(0, sac.getListObjet(), null);
-
-		ArrayList<Combinaison> listeValide = new ArrayList<Combinaison>();
 		print(lastBestCombinaison);
 		System.out.println("Profit = "+lastBestCombinaison.getProfit());
 		
@@ -45,14 +39,13 @@ public class Main {
 		}
 	}
 	
-	public static void combin2(int depth, Objet[][]matrix, Objet[] output)
-    {
+	public static void combin2(int depth, Objet[][]matrix, Objet[] output){
         Objet[] row = matrix[depth];
 
         if(depth == 0) {
             counter = 0;
             output = new Objet[matrix.length];
-            System.out.println("matrix length: " + matrix.length);
+            System.out.println("Taille de la matrice: " + matrix.length);
         }
 
         for(int i=0; i<row.length; i++) {
