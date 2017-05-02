@@ -2,7 +2,7 @@ package entites;
 
 import java.util.Arrays;
 
-public class Objet {
+public class Objet implements Comparable{
 	private float profit;
 	private int groupe;
 	private int coef [];
@@ -67,5 +67,16 @@ public class Objet {
 	 */
 	public void setCoef(int[] coef) {
 		this.coef = coef;
+	}
+
+	public int compareTo(Object obj) {
+		Objet o = (Objet) obj;
+		
+		if (this.profit > o.getProfit())
+			return 1;
+		else if (this.profit < o.getProfit())
+			return -1;
+		else
+			return 0;
 	}
 }
