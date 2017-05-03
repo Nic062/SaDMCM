@@ -81,7 +81,7 @@ public class Lecture {
 				contraintes[j-1]=Integer.parseInt(ligne.split("-")[j].trim());
 			}
 			
-			Objet obj = new Objet(profit, numGroupe, contraintes);
+			Objet obj = new Objet(profit, numGroupe, contraintes, numObjet);
 			this.sac.addObjet(numGroupe, numObjet, obj);
 		} catch (IOException e) {
 			e.printStackTrace();

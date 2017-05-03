@@ -6,6 +6,7 @@ public class Objet implements Comparable<Objet>{
 	private float profit;
 	private int groupe;
 	private int coef [];
+	private int position;
 
 	/**
 	 * Constructeur de la classe Objet
@@ -13,10 +14,11 @@ public class Objet implements Comparable<Objet>{
 	 * @param groupe
 	 * @param coef
 	 */
-	public Objet(float profit, int groupe, int[] coef){
+	public Objet(float profit, int groupe, int[] coef, int position){
 		this.profit = profit;
 		this.groupe = groupe;
 		this.coef = coef;
+		this.position = position;
 	}
 	
 	/* (non-Javadoc)
@@ -67,6 +69,14 @@ public class Objet implements Comparable<Objet>{
 	 */
 	public void setCoef(int[] coef) {
 		this.coef = coef;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	public int compareTo(Objet obj) {
