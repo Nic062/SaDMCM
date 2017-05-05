@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import entites.Combinaison;
 import entites.Lecture;
 import entites.Objet;
@@ -27,6 +29,8 @@ public class Main {
 	}
 
 	public static void algorithme() {
+		Combinaison tmp = new Combinaison();
+		
 		sac.trierCroissant();
 		
 		// Mettre combinaison de depart !
@@ -35,19 +39,24 @@ public class Main {
 			lastBestCombinaison.getListeObjet().add(sac.getObjet(i, 0));
 		}
 		
-		// verifier contrainte
-		for (int j = 0; j < sac.getNbContraintes(); j++) {
-    		if (sac.verifierContrainte(j, lastBestCombinaison)){
-    			System.out.println("Contrainte " + (j + 1) + " verifiée");
-    		}
-    		else
-    		{
-    			System.out.println("Contrainte " + (j + 1) + " non verifiée");
-    		}
-    	}
+		tmp.setListeObjet(lastBestCombinaison.getListeObjet());
 		
-		getChangement();
+		do
+		{
+			lastBestCombinaison.setListeObjet(tmp.getListeObjet());
+			
+			Objet obj = getChangement();
+			ArrayList<Objet> tmpliste = new ArrayList<Objet>();
+			for (Objet tmpobj : lastBestCombinaison.getListeObjet()) {
+				tmpliste.add(tmpobj);
+			}
+			
+			tmp.setListeObjet(tmpliste);
+			setChangement(obj, tmp);
+			
+		} while(verifierContraintes(tmp));
 		
+		verifierContraintes(lastBestCombinaison);
 		print(lastBestCombinaison);
 		System.out.println("Profit = "+lastBestCombinaison.getProfit());
 		
@@ -87,6 +96,8 @@ public class Main {
 	
 	public static Objet getChangement() {
 		Objet choisit = null;
+		double differenceChoisit = 0.0;
+		
 		for (int i = 0; i < sac.getNbGroupes(); i++) {
 			Objet actuel = null;
 			for( Objet obj : lastBestCombinaison.getListeObjet()) {
@@ -101,19 +112,43 @@ public class Main {
 				if (tmp != actuel) {
 					if (choisit == null) {
 						choisit = new Objet(tmp.getProfit(), tmp.getGroupe(), tmp.getCoef(), tmp.getPosition());
+						differenceChoisit = ressource(choisit) - ressource(actuel);
 					}
 					double differenceTmp = ressource(tmp) - ressource(actuel);
-					double differenceChoisit = ressource(choisit) - ressource(actuel);
-					System.out.println(i + " " + j);
-					System.out.println("Difference tmp : " + differenceTmp);
-					System.out.println("Difference choisit : " + differenceChoisit);
+					
+					//System.out.println(i + " " + j);
+					//System.out.println("Difference tmp : " + differenceTmp);
+					//System.out.println("Difference choisit : " + differenceChoisit);
 					if (differenceTmp < differenceChoisit) {
-						System.out.println("Plus petit");
+						//System.out.println("Plus petit");
 						choisit = new Objet(tmp.getProfit(), tmp.getGroupe(), tmp.getCoef(), tmp.getPosition());;
+						differenceChoisit = differenceTmp;
 					}
 				}
 			}
 		}
 		return choisit;
+	}
+	
+	public static void setChangement(Objet change, Combinaison comb) {
+		Objet old = null;
+		for(Objet obj : comb.getListeObjet()) {
+			if (obj.getGroupe() == change.getGroupe()) {
+				old = obj;
+			}
+		}
+		
+		comb.getListeObjet().remove(old);
+		comb.getListeObjet().add(change);
+	}
+	
+	public static boolean verifierContraintes(Combinaison comb) {
+		for (int j = 0; j < sac.getNbContraintes(); j++) {
+    		if (!sac.verifierContrainte(j, comb)){
+    			System.out.println("Contrainte " + (j + 1) + " violée");
+    			return false;
+    		}
+    	}
+		return true;
 	}
 }
