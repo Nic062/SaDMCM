@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import entites.Combinaison;
 import entites.Lecture;
 import entites.Objet;
@@ -10,26 +12,35 @@ public class Main {
 	static int counter = 0;
 	static Sac sac;
 	static Combinaison lastBestCombinaison = null;
+	static ArrayList<Combinaison> listeComb = new ArrayList<Combinaison>();
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
-		Lecture lecture = new Lecture("instances/I2.txt");
+		Lecture lecture = new Lecture("instances/I3.txt");
 		lecture.lireEntete();
 		lecture.lireContraintesCapacite();
 		for(int i=0; i<lecture.getSac().getNbGroupes();i++)
 			lecture.lireGroupe(i);
 		sac = lecture.getSac();
+		sac.trierDecroissant();
 		algorithme();
+		
 		long fin = System.currentTimeMillis();
 		System.out.println("Temps d'éxecution : " + (fin - debut) + " ms");
 	}
 
 	public static void algorithme() {
 		combin2(0, sac.getListObjet(), null);
+		
 		print(lastBestCombinaison);
 		System.out.println("Profit = "+lastBestCombinaison.getProfit());
+		
+		for(int i=0;i<listeComb.size();i++){
+			print(listeComb.get(i));
+		}
 		
 	}
 
@@ -57,6 +68,8 @@ public class Main {
             	for (Objet objet : output) {
 					comb.getListeObjet().add(objet);
 				}
+            	
+            	listeComb.add(comb);
             	
             	boolean ajout = true;
             	for(int j=0;j<sac.getNbContraintes();j++){

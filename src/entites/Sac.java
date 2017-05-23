@@ -4,6 +4,7 @@
 package entites;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Sac {
 	private Objet[][] listObjet;
@@ -163,5 +164,17 @@ public class Sac {
 		}
 
 		return true;
+	}
+	
+	public void trierCroissant(){
+		for ( int i = 0; i < this.nbGroupes; i++) {
+			Arrays.sort(listObjet[i]);
+		}
+	}
+	
+	public void trierDecroissant(){
+		for ( int i = 0; i < this.nbGroupes; i++) {
+			Arrays.sort(listObjet[i], Collections.reverseOrder());
+		}
 	}
 }
