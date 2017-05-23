@@ -19,7 +19,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		long debut = System.currentTimeMillis();
-		Lecture lecture = new Lecture("instances/I3.txt");
+		Lecture lecture = new Lecture("instances/I0.txt");
 		lecture.lireEntete();
 		lecture.lireContraintesCapacite();
 		for(int i=0; i<lecture.getSac().getNbGroupes();i++)
@@ -38,9 +38,7 @@ public class Main {
 		print(lastBestCombinaison);
 		System.out.println("Profit = "+lastBestCombinaison.getProfit());
 		
-		for(int i=0;i<listeComb.size();i++){
-			print(listeComb.get(i));
-		}
+		
 		
 	}
 
@@ -69,7 +67,6 @@ public class Main {
 					comb.getListeObjet().add(objet);
 				}
             	
-            	listeComb.add(comb);
             	
             	boolean ajout = true;
             	for(int j=0;j<sac.getNbContraintes();j++){
