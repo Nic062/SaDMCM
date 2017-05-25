@@ -18,8 +18,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/**for (int i = 1; i < 14; i++) {
-		 	debut = System.currentTimeMillis();
+		for (int i = 1; i < 14; i++) {
+			debut = System.currentTimeMillis();
 			if ( i == 8)
 				continue;
 			String filename = "I" + i;
@@ -31,12 +31,10 @@ public class Main {
 				lecture.lireGroupe(j);
 			sac = lecture.getSac();
 			algorithme();
-			Ecriture ecriture = new Ecriture(lastBestCombinaison, filename, lastBestCombinaison.getProfit());
-			ecriture.ecrire();
 			long fin = System.currentTimeMillis();
 			System.out.println("Temps d'éxecution : " + (fin - debut) + " ms");
-		}*/
-		for (int i = 1; i < 21; i++) {
+		}
+		for (int i = 1; i < 2; i++) {
 			debut = System.currentTimeMillis();
 			String filename = "INST" + (i < 10 ? "0" + i : i);
 			System.out.println(filename);
@@ -47,8 +45,6 @@ public class Main {
 				lecture.lireGroupe(j);
 			sac = lecture.getSac();
 			algorithme();
-			Ecriture ecriture = new Ecriture(lastBestCombinaison, filename, lastBestCombinaison.getProfit());
-			ecriture.ecrire();
 			long fin = System.currentTimeMillis();
 			System.out.println("Temps d'éxecution : " + (fin - debut) + " ms");
 		}
@@ -58,19 +54,12 @@ public class Main {
 		Combinaison tmp = new Combinaison();
 		Objet objAChanger = null;
 
-		sac.trierCroissant();
+		sac.trierDecroissant();
 
 		// Mettre combinaison de depart !
 		lastBestCombinaison = new Combinaison();
 		for (int i = 0; i < sac.getNbGroupes(); i++) {
 			lastBestCombinaison.getListeObjet().add(sac.getObjet(i, 0));
-		}
-
-		// chercher contrainte minimum
-		if ( !verifierContraintes(lastBestCombinaison) )
-		{
-			System.out.println("contrainte pas verifier init");
-			setContrainteMini();
 		}
 
 		tmp.setListeObjet(lastBestCombinaison.getListeObjet());
@@ -80,7 +69,7 @@ public class Main {
 		{
 			lastBestCombinaison.setListeObjet(tmp.getListeObjet());
 
-			objAChanger = getChangement(objAChanger);
+			objAChanger = getChangement();
 			ArrayList<Objet> tmpliste = new ArrayList<Objet>();
 			for (Objet tmpobj : lastBestCombinaison.getListeObjet()) {
 				tmpliste.add(tmpobj);
@@ -89,10 +78,11 @@ public class Main {
 			tmp.setListeObjet(tmpliste);
 			setChangement(objAChanger, tmp);
 
-		} while(verifierContraintes(tmp) && System.currentTimeMillis() - debut < 59500);
+		} while(!verifierContraintes(tmp) && System.currentTimeMillis() - debut < 59500);
 
-		if ( verifierContraintes(lastBestCombinaison) )
+		if ( verifierContraintes(tmp) )
 		{
+			lastBestCombinaison.setListeObjet(tmp.getListeObjet());
 			System.out.println("Profit = "+lastBestCombinaison.getProfit());
 		}
 		else
@@ -125,15 +115,15 @@ public class Main {
 
 		return scalaire / norme;
 	}
-	
+
 	public static void reverse(int[] input) {
-	    int last = input.length - 1;
-	    int middle = input.length / 2;
-	    for (int i = 0; i <= middle; i++) {
-	      int temp = input[i];
-	      input[i] = input[last - i];
-	      input[last - i] = temp;
-	    }
+		int last = input.length - 1;
+		int middle = input.length / 2;
+		for (int i = 0; i <= middle; i++) {
+			int temp = input[i];
+			input[i] = input[last - i];
+			input[last - i] = temp;
+		}
 	}
 
 	public static void print(Combinaison combinaison) {
@@ -143,35 +133,28 @@ public class Main {
 		}
 	}
 
-	public static Objet getChangement(Objet exclure) {
+	public static Objet getChangement() {
 		Objet choisit = null;
 		double differenceChoisit = 0.0;
 
 		for (int i = 0; i < sac.getNbGroupes(); i++) {
-			Objet actuel = null;
-			for( Objet obj : lastBestCombinaison.getListeObjet()) {
-				if ( obj.getGroupe() == i) {
-					actuel = obj;
-					break;
+			Objet actuel = lastBestCombinaison.getObjetFromGroup(i);
+
+			if ( actuel.getPosition() + 1 < sac.getObjParGroupe())
+			{
+				Objet tmp = sac.getObjet(i, actuel.getPosition() + 1);
+				if (choisit == null) {
+					choisit = tmp;
+					differenceChoisit = ressource(choisit) - ressource(actuel);
+				}
+				double differenceTmp = ressource(tmp) - ressource(actuel);
+
+				if (differenceTmp < differenceChoisit) {
+					choisit = new Objet(tmp.getProfit(), tmp.getGroupe(), tmp.getCoef(), tmp.getPosition());;
+					differenceChoisit = differenceTmp;
 				}
 			}
 
-			for (int j = actuel.getPosition() + 1; j < sac.getObjParGroupe(); j++) {
-				Objet tmp = sac.getObjet(i, j);
-				if (tmp != actuel && tmp != exclure) {
-					if (choisit == null) {
-						choisit = new Objet(tmp.getProfit(), tmp.getGroupe(), tmp.getCoef(), tmp.getPosition());
-						differenceChoisit = ressource(choisit) - ressource(actuel);
-					}
-					double differenceTmp = ressource(tmp) - ressource(actuel);
-
-					if (differenceTmp < differenceChoisit) {
-						choisit = new Objet(tmp.getProfit(), tmp.getGroupe(), tmp.getCoef(), tmp.getPosition());;
-						differenceChoisit = differenceTmp;
-						break;
-					}
-				}
-			}
 		}
 		return choisit;
 	}
@@ -191,39 +174,9 @@ public class Main {
 	public static boolean verifierContraintes(Combinaison comb) {
 		for (int j = 0; j < sac.getNbContraintes(); j++) {
 			if (!sac.verifierContrainte(j, comb)){
-				System.out.println("Contrainte " + (j + 1) + " violée");
 				return false;
 			}
 		}
 		return true;
-	}
-
-	public static void setContrainteMini()
-	{
-		Combinaison tmp = new Combinaison();
-
-		for (int i = 0; i < sac.getNbGroupes(); i++)
-		{
-			ArrayList<Objet> tmpliste = new ArrayList<Objet>();
-			for (Objet tmpobj : lastBestCombinaison.getListeObjet()) {
-				tmpliste.add(tmpobj);
-			}
-
-			tmp.setListeObjet(tmpliste);
-
-			Objet obj = tmp.getObjetFromGroup(i);
-
-			for(int j = 1; j < sac.getObjParGroupe(); j++)
-			{
-				if ( sac.getObjet(i, j).getSommeCoef() < obj.getSommeCoef())
-					obj = new Objet(sac.getObjet(i, j).getProfit(), i, sac.getObjet(i, j).getCoef(), j);
-
-				setChangement(obj, tmp);
-				if ( verifierContraintes(tmp))
-				{
-					setChangement(obj, lastBestCombinaison);
-				}
-			}
-		}
 	}
 }
