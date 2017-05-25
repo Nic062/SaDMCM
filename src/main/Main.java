@@ -54,12 +54,18 @@ public class Main {
 		Combinaison tmp = new Combinaison();
 		Objet objAChanger = null;
 
-		sac.trierDecroissant();
+		sac.trierCroissant();
 
 		// Mettre combinaison de depart !
 		lastBestCombinaison = new Combinaison();
 		for (int i = 0; i < sac.getNbGroupes(); i++) {
 			lastBestCombinaison.getListeObjet().add(sac.getObjet(i, 0));
+		}
+		
+		if ( !verifierContraintes(lastBestCombinaison) )
+		{
+			System.out.println("contrainte pas verifier init");
+			setContrainteMini();
 		}
 
 		tmp.setListeObjet(lastBestCombinaison.getListeObjet());
@@ -70,7 +76,7 @@ public class Main {
 			lastBestCombinaison.setListeObjet(tmp.getListeObjet());
 			//print(lastBestCombinaison);
 
-			objAChanger = getChangement(objAChanger);
+			objAChanger = getChangement();
 			ArrayList<Objet> tmpliste = new ArrayList<Objet>();
 			for (Objet tmpobj : lastBestCombinaison.getListeObjet()) {
 				tmpliste.add(tmpobj);
@@ -120,16 +126,6 @@ public class Main {
 		return scalaire / norme;
 	}
 
-	public static void reverse(int[] input) {
-		int last = input.length - 1;
-		int middle = input.length / 2;
-		for (int i = 0; i <= middle; i++) {
-			int temp = input[i];
-			input[i] = input[last - i];
-			input[last - i] = temp;
-		}
-	}
-
 	public static void print(Combinaison combinaison) {
 		for (int obj = 0; obj < combinaison.getListeObjet().size(); obj++) {
 			System.out.println(combinaison.getListeObjet().get(obj));
@@ -137,7 +133,7 @@ public class Main {
 		}
 	}
 
-	public static Objet getChangement(Objet exclure) {
+	public static Objet getChangement() {
 		Objet choisit = null;
 		double differenceChoisit = 0.0;
 		int j = 0;
@@ -150,9 +146,7 @@ public class Main {
 			{
 				//System.out.println("entre");
 				Objet tmp = sac.getObjet(i, actuel.getPosition() + 1);
-				if (exclure != null && tmp.getGroupe() == exclure.getGroupe() && tmp.getPosition() == exclure.getPosition()) {
-					System.out.println("lol");
-				}
+				
 				if (choisit == null) {
 					choisit = tmp;
 					differenceChoisit = ressource(choisit) - ressource(actuel);
@@ -190,5 +184,34 @@ public class Main {
 			}
 		}
 		return true;
+	}
+
+	public static void setContrainteMini()
+	{
+		Combinaison tmp = new Combinaison();
+
+		for (int i = 0; i < sac.getNbGroupes(); i++)
+		{
+			ArrayList<Objet> tmpliste = new ArrayList<Objet>();
+			for (Objet tmpobj : lastBestCombinaison.getListeObjet()) {
+				tmpliste.add(tmpobj);
+			}
+
+			tmp.setListeObjet(tmpliste);
+
+			Objet obj = tmp.getObjetFromGroup(i);
+
+			for(int j = 1; j < sac.getObjParGroupe(); j++)
+			{
+				if ( sac.getObjet(i, j).getSommeCoef() < obj.getSommeCoef())
+					obj = new Objet(sac.getObjet(i, j).getProfit(), i, sac.getObjet(i, j).getCoef(), j);
+
+				setChangement(obj, tmp);
+				if ( verifierContraintes(tmp))
+				{
+					setChangement(obj, lastBestCombinaison);
+				}
+			}
+		}
 	}
 }
