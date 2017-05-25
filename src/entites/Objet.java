@@ -93,7 +93,6 @@ public class Objet implements Comparable<Objet>{
 	}
 
 	public int compareTo(Objet obj) {
-
 		if (this.profit > obj.getProfit())
 			return 1;
 		else if (this.profit < obj.getProfit())
