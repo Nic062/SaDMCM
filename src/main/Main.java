@@ -120,16 +120,6 @@ public class Main {
 		return scalaire / norme;
 	}
 
-	public static void reverse(int[] input) {
-		int last = input.length - 1;
-		int middle = input.length / 2;
-		for (int i = 0; i <= middle; i++) {
-			int temp = input[i];
-			input[i] = input[last - i];
-			input[last - i] = temp;
-		}
-	}
-
 	public static void print(Combinaison combinaison) {
 		for (int obj = 0; obj < combinaison.getListeObjet().size(); obj++) {
 			System.out.println(combinaison.getListeObjet().get(obj));
