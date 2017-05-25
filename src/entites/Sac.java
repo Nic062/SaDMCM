@@ -170,11 +170,21 @@ public class Sac {
 		for ( int i = 0; i < this.nbGroupes; i++) {
 			Arrays.sort(listObjet[i]);
 		}
+		for ( int i = 0; i < this.nbGroupes; i++) {
+			for ( int j = 0; j < this.objParGroupe; j++) {
+				this.getObjet(i, j).setPosition(j);
+			}
+		}
 	}
 	
 	public void trierDecroissant(){
 		for ( int i = 0; i < this.nbGroupes; i++) {
 			Arrays.sort(listObjet[i], Collections.reverseOrder());
+		}
+		for ( int i = 0; i < this.nbGroupes; i++) {
+			for ( int j = 0; j < this.objParGroupe; j++) {
+				this.getObjet(i, j).setPosition(j);
+			}
 		}
 	}
 	

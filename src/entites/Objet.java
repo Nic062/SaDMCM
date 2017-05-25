@@ -25,7 +25,7 @@ public class Objet implements Comparable<Objet>{
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return "Objet [profit=" + profit + ", groupe=" + groupe + ", coef=" + Arrays.toString(coef)
+		return "Objet [profit=" + profit + ", groupe=" + groupe + ", position=" + position + ", coef=" + Arrays.toString(coef)
 				+ "]";
 	}
 
