@@ -40,7 +40,7 @@ public class Ecriture {
 			buffer.write(filename + "\n");
 			buffer.write(combinaison.getProfit() + "\n");
 			for (int i = 0; i < combinaison.getListeObjet().size(); i++) {
-				buffer.write("Objet " + (i + 1) + " du groupe " + (i + 1) + " : ");
+				buffer.write("Objet " + combinaison.getListeObjet().get(i).getPosition() + " du groupe " + combinaison.getListeObjet().get(i).getGroupe() + " : ");
 				buffer.write(combinaison.getListeObjet().get(i).getProfit() + " ");
 				for (int k = 0; k < combinaison.getListeObjet().get(i).getCoef().length; k++) {
 					buffer.write(combinaison.getListeObjet().get(i).getCoef()[k] + " ");

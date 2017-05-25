@@ -20,7 +20,7 @@ public class Objet implements Comparable<Objet>{
 		this.coef = coef;
 		this.position = position;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -64,6 +64,19 @@ public class Objet implements Comparable<Objet>{
 		return coef;
 	}
 
+	public int getCoef(int nbCoef) {
+		return getCoef()[nbCoef];
+	}
+
+	public int getSommeCoef() {
+		int somme = 0;
+		for (int coef : this.coef) {
+			somme += coef;
+		}
+
+		return somme;
+	}
+
 	/**
 	 * @param coef
 	 */
@@ -80,7 +93,7 @@ public class Objet implements Comparable<Objet>{
 	}
 
 	public int compareTo(Objet obj) {
-		
+
 		if (this.profit > obj.getProfit())
 			return 1;
 		else if (this.profit < obj.getProfit())
