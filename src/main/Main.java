@@ -34,7 +34,7 @@ public class Main {
 			long fin = System.currentTimeMillis();
 			System.out.println("Temps d'éxecution : " + (fin - debut) + " ms");
 		}
-		for (int i = 1; i < 2; i++) {
+		for (int i = 1; i < 21; i++) {
 			debut = System.currentTimeMillis();
 			String filename = "INST" + (i < 10 ? "0" + i : i);
 			System.out.println(filename);
@@ -68,14 +68,18 @@ public class Main {
 		do
 		{
 			lastBestCombinaison.setListeObjet(tmp.getListeObjet());
+			//print(lastBestCombinaison);
 
-			objAChanger = getChangement();
+			objAChanger = getChangement(objAChanger);
 			ArrayList<Objet> tmpliste = new ArrayList<Objet>();
 			for (Objet tmpobj : lastBestCombinaison.getListeObjet()) {
 				tmpliste.add(tmpobj);
 			}
 
 			tmp.setListeObjet(tmpliste);
+			if (objAChanger == null)
+				break;
+
 			setChangement(objAChanger, tmp);
 
 		} while(!verifierContraintes(tmp) && System.currentTimeMillis() - debut < 59500);
@@ -133,21 +137,28 @@ public class Main {
 		}
 	}
 
-	public static Objet getChangement() {
+	public static Objet getChangement(Objet exclure) {
 		Objet choisit = null;
 		double differenceChoisit = 0.0;
+		int j = 0;
 
 		for (int i = 0; i < sac.getNbGroupes(); i++) {
 			Objet actuel = lastBestCombinaison.getObjetFromGroup(i);
+			//System.out.println(i);
 
 			if ( actuel.getPosition() + 1 < sac.getObjParGroupe())
 			{
+				//System.out.println("entre");
 				Objet tmp = sac.getObjet(i, actuel.getPosition() + 1);
+				if (exclure != null && tmp.getGroupe() == exclure.getGroupe() && tmp.getPosition() == exclure.getPosition()) {
+					System.out.println("lol");
+				}
 				if (choisit == null) {
 					choisit = tmp;
 					differenceChoisit = ressource(choisit) - ressource(actuel);
 				}
 				double differenceTmp = ressource(tmp) - ressource(actuel);
+				//System.out.println(differenceChoisit);
 
 				if (differenceTmp < differenceChoisit) {
 					choisit = new Objet(tmp.getProfit(), tmp.getGroupe(), tmp.getCoef(), tmp.getPosition());;
@@ -156,6 +167,7 @@ public class Main {
 			}
 
 		}
+		//System.out.println(choisit);
 		return choisit;
 	}
 
